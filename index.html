@@ -1,0 +1,2521 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Editor DANFE Cliente v5</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+<style>
+:root{
+  --bg:#07101d;
+  --panel:#0e1a2e;
+  --text:#eef5ff;
+  --muted:#94a8c5;
+  --line:rgba(255,255,255,.11);
+  --a:#61e3ff;
+  --b:#8d7cff;
+  --ok:#62e4a5;
+  --warn:#ffb84c;
+  --bad:#ff7695
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 10% 0,rgba(97,227,255,.10),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,Segoe UI,Arial,sans-serif
+}
+
+.app{
+  max-width:1500px;
+  margin:auto;
+  padding:18px
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  margin-bottom:14px
+}
+
+.top h1{
+  margin:0;
+  font-size:22px
+}
+
+.top p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:12px
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:420px 1fr;
+  gap:14px
+}
+
+.panel{
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 18px 55px rgba(0,0,0,.4)
+}
+
+.side{
+  padding:14px;
+  position:sticky;
+  top:14px;
+  max-height:calc(100vh - 28px);
+  overflow:auto
+}
+
+.sec{
+  padding-bottom:13px;
+  margin-bottom:13px;
+  border-bottom:1px solid var(--line)
+}
+
+.sec:last-child{
+  border:0;
+  margin:0
+}
+
+.drop{
+  display:block;
+  border:1.5px dashed rgba(97,227,255,.38);
+  border-radius:14px;
+  padding:15px;
+  text-align:center;
+  background:rgba(97,227,255,.04);
+  cursor:pointer
+}
+
+.drop b{
+  display:block
+}
+
+.drop small{
+  color:var(--muted)
+}
+
+input[type=file]{
+  display:none
+}
+
+.status{
+  font-size:11px;
+  line-height:1.45;
+  color:var(--muted);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:9px;
+  background:rgba(255,255,255,.02)
+}
+
+.okmsg{
+  color:#baffdd;
+  border-color:rgba(98,228,165,.25);
+  background:rgba(98,228,165,.05)
+}
+
+.warnmsg{
+  color:#ffe1aa;
+  border-color:rgba(255,184,76,.25);
+  background:rgba(255,184,76,.05)
+}
+
+.badmsg{
+  color:#ffc0cf;
+  border-color:rgba(255,118,149,.25)
+}
+
+.fields{
+  display:grid;
+  gap:8px
+}
+
+.field{
+  border:1px solid var(--line);
+  border-radius:11px;
+  padding:8px;
+  background:rgba(255,255,255,.02)
+}
+
+.field.changed{
+  border-color:rgba(98,228,165,.35);
+  background:rgba(98,228,165,.04)
+}
+
+.field b{
+  font-size:11px
+}
+
+.orig{
+  font-size:9px;
+  color:var(--muted);
+  margin:4px 0 6px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+
+.in{
+  width:100%;
+  padding:9px 10px;
+  border-radius:9px;
+  border:1px solid var(--line);
+  background:#091429;
+  color:var(--text);
+  outline:none
+}
+
+.in:focus{
+  border-color:rgba(97,227,255,.55)
+}
+
+textarea.in{
+  resize:vertical;
+  min-height:80px;
+  font-family:inherit
+}
+
+.btn{
+  width:100%;
+  padding:10px 11px;
+  border:0;
+  border-radius:10px;
+  background:#1a2a49;
+  color:var(--text);
+  font-weight:750;
+  cursor:pointer;
+  margin-top:7px
+}
+
+.btn.ok{
+  background:linear-gradient(135deg,#5be3a2,#80efd9);
+  color:#071a13
+}
+
+.btn.primary{
+  background:linear-gradient(135deg,var(--a),var(--b));
+  color:#06101e
+}
+
+.btn:disabled{
+  opacity:.4;
+  cursor:not-allowed
+}
+
+.viewer{
+  overflow:hidden
+}
+
+.bar{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  padding:10px 12px;
+  border-bottom:1px solid var(--line)
+}
+
+.mini{
+  padding:7px 9px;
+  border:0;
+  border-radius:8px;
+  background:#1a2a49;
+  color:#fff;
+  cursor:pointer
+}
+
+.stage{
+  min-height:75vh;
+  padding:22px;
+  overflow:auto;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  background:rgba(255,255,255,.015)
+}
+
+.paper{
+  position:relative;
+  background:#fff;
+  box-shadow:0 20px 55px rgba(0,0,0,.5);
+  line-height:0
+}
+
+.paper canvas{
+  display:block
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  pointer-events:none
+}
+
+.scope{
+  position:absolute;
+  border:2px solid rgba(97,227,255,.55);
+  background:rgba(97,227,255,.04);
+  display:none
+}
+
+.scope:before{
+  content:"DESTINATÁRIO / CLIENTE";
+  position:absolute;
+  left:-2px;
+  top:-18px;
+  background:#1ca4c5;
+  color:#fff;
+  font:700 8px Arial;
+  padding:4px 6px;
+  border-radius:4px
+}
+
+.box{
+  position:absolute;
+  border:2px solid #ffad2f;
+  background:rgba(255,173,47,.12);
+  display:none
+}
+
+.box:after{
+  content:attr(data-label);
+  position:absolute;
+  top:-18px;
+  left:-2px;
+  background:#ffad2f;
+  color:#251200;
+  font:700 8px Arial;
+  padding:4px 6px;
+  border-radius:4px
+}
+
+.preview{
+  position:absolute;
+  display:none;
+  background:#fff;
+  color:#000;
+  font-family:Arial,sans-serif;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  padding:0 1px
+}
+
+.diag{
+  font-size:9px;
+  color:var(--muted);
+  line-height:1.45;
+  white-space:pre-wrap
+}
+
+@media(max-width:980px){
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .side{
+    position:static;
+    max-height:none
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="top">
+    <div>
+      <h1>Editor DANFE Cliente v5</h1>
+      <p>
+        Fluxo: abre PDF → encontra Destinatário/Remetente → entende células →
+        mostra dados → edita → valida → exporta.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <aside class="panel side">
+
+      <div class="sec">
+
+        <label class="drop" for="file">
+          <b>Abrir PDF</b>
+          <small>Arraste ou clique para escolher</small>
+        </label>
+
+        <input
+          id="file"
+          type="file"
+          accept="application/pdf,.pdf"
+        >
+
+        <div
+          id="status"
+          class="status"
+          style="margin-top:8px"
+        >
+          Aguardando PDF.
+        </div>
+
+      </div>
+
+
+      <div class="sec">
+
+        <div id="fields" class="fields">
+
+          <div class="status">
+            Abra o PDF para carregar os campos.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="sec">
+
+        <button
+          id="generate"
+          class="btn ok"
+          disabled
+        >
+          Gerar PDF editado
+        </button>
+
+        <button
+          id="download"
+          class="btn primary"
+          disabled
+        >
+          Baixar PDF editado
+        </button>
+
+      </div>
+
+
+      <div class="sec">
+
+        <b style="font-size:11px">
+          Compartilhamento
+        </b>
+
+
+        <div
+          class="field"
+          style="margin-top:8px"
+        >
+
+          <b>Título</b>
+
+          <input
+            id="shareTitle"
+            class="in"
+            value="Documento PDF"
+            placeholder="Título do compartilhamento"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <b>Mensagem</b>
+
+          <textarea
+            id="shareText"
+            class="in"
+            rows="4"
+            placeholder="Mensagem que acompanha o PDF"
+          >Segue o documento atualizado para conferência.</textarea>
+
+        </div>
+
+
+        <div class="field">
+
+          <b>Referência / assinatura</b>
+
+          <input
+            id="shareReference"
+            class="in"
+            value=""
+            placeholder="Ex.: Ref. ABR-001"
+          >
+
+        </div>
+
+
+        <button
+          id="share"
+          class="btn primary"
+          disabled
+        >
+          Compartilhar PDF
+        </button>
+
+      </div>
+
+
+      <div class="sec">
+
+        <b style="font-size:11px">
+          Diagnóstico
+        </b>
+
+        <div
+          id="diag"
+          class="diag"
+          style="margin-top:6px"
+        >
+          Sem diagnóstico.
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <main class="panel viewer">
+
+      <div class="bar">
+
+        <div>
+
+          <button
+            id="prev"
+            class="mini"
+            disabled
+          >
+            ◀
+          </button>
+
+          <button
+            id="next"
+            class="mini"
+            disabled
+          >
+            ▶
+          </button>
+
+          <span
+            id="pageInfo"
+            style="
+              font-size:11px;
+              color:#94a8c5;
+              margin-left:7px
+            "
+          >
+            Nenhum PDF
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <button
+            id="zm"
+            class="mini"
+            disabled
+          >
+            −
+          </button>
+
+          <button
+            id="zp"
+            class="mini"
+            disabled
+          >
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="stage">
+
+        <div id="paper" class="paper">
+
+          <canvas id="canvas"></canvas>
+
+          <div class="overlay">
+
+            <div
+              id="scope"
+              class="scope"
+            ></div>
+
+            <div
+              id="box"
+              class="box"
+            ></div>
+
+            <div
+              id="preview"
+              class="preview"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</div>
+
+
+<script>
+(function(){
+
+"use strict";
+
+
+const $=id=>document.getElementById(id);
+
+
+const E={
+
+  file:$("file"),
+
+  status:$("status"),
+
+  fields:$("fields"),
+
+  generate:$("generate"),
+
+  download:$("download"),
+
+  share:$("share"),
+
+  shareTitle:$("shareTitle"),
+
+  shareText:$("shareText"),
+
+  shareReference:$("shareReference"),
+
+  diag:$("diag"),
+
+  prev:$("prev"),
+
+  next:$("next"),
+
+  pageInfo:$("pageInfo"),
+
+  zm:$("zm"),
+
+  zp:$("zp"),
+
+  paper:$("paper"),
+
+  canvas:$("canvas"),
+
+  scope:$("scope"),
+
+  box:$("box"),
+
+  preview:$("preview")
+
+};
+
+
+const ctx=E.canvas.getContext(
+  "2d",
+  {alpha:false}
+);
+
+
+pdfjsLib.GlobalWorkerOptions.workerSrc=
+"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+
+const LABELS=[
+  "Nome / Razão Social",
+  "CNPJ/CPF",
+  "Inscrição Estadual",
+  "Endereço",
+  "Bairro",
+  "CEP",
+  "Município",
+  "UF",
+  "Fone/Fax"
+];
+
+
+let src=null;
+
+let out=null;
+
+let pdf=null;
+
+let pageNo=1;
+
+let scale=1.25;
+
+let fields=[];
+
+let active=null;
+
+let scope=null;
+
+
+
+function norm(s){
+
+  return String(s||"")
+
+  .normalize("NFD")
+
+  .replace(/[\u0300-\u036f]/g,"")
+
+  .toLowerCase()
+
+  .replace(/\s+/g," ")
+
+  .trim();
+
+}
+
+
+
+function esc(s){
+
+  return String(s||"")
+
+  .replace(/[&<>"']/g,m=>({
+
+    "&":"&amp;",
+
+    "<":"&lt;",
+
+    ">":"&gt;",
+
+    '"':"&quot;",
+
+    "'":"&#39;"
+
+  }[m]));
+
+}
+
+
+
+function status(t,c=""){
+
+  E.status.className=
+    "status"+(c?" "+c:"");
+
+  E.status.innerHTML=t;
+
+}
+
+
+
+function changed(){
+
+  return fields.filter(
+    f=>f.newValue!==f.value
+  );
+
+}
+
+
+
+function wordsForLine(items,y,tol=2.8){
+
+  return items
+
+  .filter(
+    x=>Math.abs(x.y-y)<=tol
+  )
+
+  .sort(
+    (a,b)=>a.x-b.x
+  );
+
+}
+
+
+
+function joinWords(arr){
+
+  return arr
+
+  .map(x=>x.text)
+
+  .join(" ")
+
+  .replace(/\s+/g," ")
+
+  .trim();
+
+}
+
+
+
+async function getWords(p){
+
+  const pg=
+    await pdf.getPage(p);
+
+  const vp=
+    pg.getViewport({scale:1});
+
+  const tc=
+    await pg.getTextContent();
+
+  const arr=[];
+
+
+  for(const i of tc.items){
+
+    const text=
+      String(i.str||"").trim();
+
+    if(!text)continue;
+
+
+    const tr=
+      pdfjsLib.Util.transform(
+        vp.transform,
+        i.transform
+      );
+
+
+    const h=
+      Math.max(
+        4.5,
+        Math.abs(
+          i.height||
+          tr[3]||
+          7
+        )
+      );
+
+
+    const x=tr[4];
+
+    const y=tr[5]-h;
+
+    const w=
+      Math.max(
+        1,
+        i.width||1
+      );
+
+
+    // divide itens compostos para melhorar reconhecimento de "Nome / Razão Social"
+
+    const parts=[
+      ...text.matchAll(/\S+/g)
+    ];
+
+
+    if(parts.length<=1){
+
+      arr.push({
+
+        text,
+
+        x,
+
+        y,
+
+        w,
+
+        h,
+
+        x1:x+w,
+
+        cx:x+w/2
+
+      });
+
+      continue;
+
+    }
+
+
+    for(const m of parts){
+
+      const st=m.index||0;
+
+      const len=m[0].length;
+
+      const tw=
+        w*(
+          len/
+          Math.max(
+            1,
+            text.length
+          )
+        );
+
+
+      const tx=
+        x+
+        w*(
+          st/
+          Math.max(
+            1,
+            text.length
+          )
+        );
+
+
+      arr.push({
+
+        text:m[0],
+
+        x:tx,
+
+        y,
+
+        w:tw,
+
+        h,
+
+        x1:tx+tw,
+
+        cx:tx+tw/2
+
+      });
+
+    }
+
+  }
+
+
+  return arr.sort(
+    (a,b)=>
+      a.y-b.y||
+      a.x-b.x
+  );
+
+}
+
+
+
+function makeLines(items){
+
+  const ls=[];
+
+
+  for(const it of items){
+
+    let l=
+      ls.find(
+        z=>Math.abs(z.y-it.y)<2.8
+      );
+
+
+    if(!l){
+
+      l={
+        y:it.y,
+        items:[]
+      };
+
+      ls.push(l);
+
+    }
+
+
+    l.items.push(it);
+
+
+    l.y=
+      l.items.reduce(
+        (s,z)=>s+z.y,
+        0
+      )/
+      l.items.length;
+
+  }
+
+
+  ls.sort(
+    (a,b)=>a.y-b.y
+  );
+
+
+  for(const l of ls){
+
+    l.items.sort(
+      (a,b)=>a.x-b.x
+    );
+
+
+    l.text=
+      joinWords(l.items);
+
+
+    l.x0=
+      Math.min(
+        ...l.items.map(
+          x=>x.x
+        )
+      );
+
+
+    l.x1=
+      Math.max(
+        ...l.items.map(
+          x=>x.x1
+        )
+      );
+
+
+    l.bottom=
+      Math.max(
+        ...l.items.map(
+          x=>x.y+x.h
+        )
+      );
+
+  }
+
+
+  return ls;
+
+}
+
+
+
+function phraseMatch(line,label){
+
+  const want=
+    norm(label).split(" ");
+
+
+  const have=
+    line.items.map(
+      x=>norm(x.text)
+    );
+
+
+  for(
+    let i=0;
+    i<=have.length-want.length;
+    i++
+  ){
+
+    let ok=true;
+
+
+    for(
+      let j=0;
+      j<want.length;
+      j++
+    ){
+
+      if(
+        have[i+j]!==want[j]
+      ){
+
+        ok=false;
+
+        break;
+
+      }
+
+    }
+
+
+    if(ok){
+
+      const a=
+        line.items.slice(
+          i,
+          i+want.length
+        );
+
+
+      return {
+
+        x:a[0].x,
+
+        x1:a[a.length-1].x1,
+
+        y:Math.min(
+          ...a.map(x=>x.y)
+        ),
+
+        bottom:Math.max(
+          ...a.map(
+            x=>x.y+x.h
+          )
+        )
+
+      };
+
+    }
+
+  }
+
+
+  // tolera quando PDF.js entrega o rótulo inteiro em um item
+
+  if(
+    norm(line.text)
+    .includes(
+      norm(label)
+    )
+  ){
+
+    return {
+
+      x:line.x0,
+
+      x1:line.x1,
+
+      y:line.y,
+
+      bottom:line.bottom
+
+    };
+
+  }
+
+
+  return null;
+
+}
+
+
+
+function findSection(lines){
+
+  const head=
+    lines.find(
+      l=>
+        norm(l.text)
+        .includes(
+          "destinatario/remetente"
+        )
+        ||
+        norm(l.text)
+        .includes(
+          "destinatario / remetente"
+        )
+    );
+
+
+  if(!head)return null;
+
+
+  const end=
+    lines.find(
+      l=>
+        l.y>head.y
+        &&
+        [
+          "faturas",
+          "calculo do imposto",
+          "cálculo do imposto",
+          "transportador/volumes transportados"
+        ]
+        .some(
+          s=>
+            norm(l.text)
+            .includes(
+              norm(s)
+            )
+        )
+    );
+
+
+  return {
+
+    top:head.y,
+
+    bottom:
+      end
+      ?
+      end.y
+      :
+      head.y+80,
+
+    x0:
+      Math.max(
+        0,
+        head.x0-3
+      ),
+
+    x1:560,
+
+    head
+
+  };
+
+}
+
+
+
+function sameRow(a,b){
+
+  return Math.abs(
+    a.y-b.y
+  )<5.5;
+
+}
+
+
+
+async function detect(p){
+
+  const items=
+    await getWords(p);
+
+
+  const lines=
+    makeLines(items);
+
+
+  const sec=
+    findSection(lines);
+
+
+  if(!sec){
+
+    return {
+
+      fields:[],
+
+      scope:null,
+
+      diag:
+        "Cabeçalho Destinatário/Remetente não encontrado."
+
+    };
+
+  }
+
+
+  const matches=[];
+
+
+  for(const l of lines){
+
+    if(
+      l.y<sec.top||
+      l.y>=sec.bottom
+    )
+    continue;
+
+
+    for(
+      const label
+      of LABELS
+    ){
+
+      const m=
+        phraseMatch(
+          l,
+          label
+        );
+
+
+      if(m){
+
+        matches.push({
+
+          label,
+
+          ...m,
+
+          line:l
+
+        });
+
+      }
+
+    }
+
+  }
+
+
+  // elimina duplicatas do mesmo rótulo e mantém a primeira ocorrência dentro do bloco
+
+  const unique=[];
+
+
+  for(
+    const label
+    of LABELS
+  ){
+
+    const xs=
+      matches
+
+      .filter(
+        m=>m.label===label
+      )
+
+      .sort(
+        (a,b)=>
+          a.y-b.y||
+          a.x-b.x
+      );
+
+
+    if(xs[0]){
+
+      unique.push(
+        xs[0]
+      );
+
+    }
+
+  }
+
+
+  const result=[];
+
+
+  for(const m of unique){
+
+    const rowPeers=
+      unique
+
+      .filter(
+        z=>sameRow(z,m)
+      )
+
+      .sort(
+        (a,b)=>a.x-b.x
+      );
+
+
+    const idx=
+      rowPeers.findIndex(
+        z=>z.label===m.label
+      );
+
+
+    let cellRight=
+      idx>=0
+      &&
+      idx<rowPeers.length-1
+      ?
+      rowPeers[idx+1].x-1
+      :
+      560;
+
+
+    // No DANFE há colunas de datas à direita.
+    // Para os campos do cliente, limita a área.
+
+    if(m.x<400){
+
+      cellRight=
+        Math.min(
+          cellRight,
+          465
+        );
+
+    }
+
+
+    const nextLabelY=
+      Math.min(
+        ...unique
+        .filter(
+          z=>z.y>m.y+5.5
+        )
+        .map(
+          z=>z.y
+        )
+        .concat(
+          [sec.bottom]
+        )
+      );
+
+
+    const valueLines=
+      lines.filter(
+        l=>
+          l.y>m.bottom+0.4
+          &&
+          l.y<nextLabelY-0.3
+      );
+
+
+    // pega a primeira linha de valor
+    // e filtra pela célula horizontal
+
+    let vals=[];
+
+
+    for(
+      const vl
+      of valueLines
+    ){
+
+      const inside=
+        vl.items.filter(
+          it=>
+            it.cx>=m.x-1
+            &&
+            it.cx<cellRight
+        );
+
+
+      if(inside.length){
+
+        vals=inside;
+
+        break;
+
+      }
+
+    }
+
+
+    const value=
+      joinWords(vals);
+
+
+    const vy=
+      vals.length
+      ?
+      Math.min(
+        ...vals.map(
+          v=>v.y
+        )
+      )
+      :
+      m.bottom+1.5;
+
+
+    const vh=
+      vals.length
+      ?
+      Math.max(
+        ...vals.map(
+          v=>v.y+v.h
+        )
+      )-vy
+      :
+      8.5;
+
+
+    result.push({
+
+      page:p,
+
+      label:m.label,
+
+      value,
+
+      newValue:value,
+
+      x:m.x,
+
+      y:vy,
+
+      w:
+        Math.max(
+          20,
+          cellRight-m.x
+        ),
+
+      h:
+        Math.max(
+          7.5,
+          vh
+        )
+
+    });
+
+  }
+
+
+  const diag=
+    result.map(
+
+      f=>
+
+      `${f.label}: "${f.value}"  x=${f.x.toFixed(1)} y=${f.y.toFixed(1)} w=${f.w.toFixed(1)} h=${f.h.toFixed(1)}`
+
+    )
+    .join("\n");
+
+
+  return {
+
+    fields:result,
+
+    scope:{
+
+      top:sec.top,
+
+      bottom:sec.bottom,
+
+      x0:28,
+
+      x1:560
+
+    },
+
+    diag
+
+  };
+
+}
+
+
+
+function renderFields(){
+
+  E.fields.innerHTML="";
+
+
+  if(!fields.length){
+
+    E.fields.innerHTML=
+      '<div class="status warnmsg">Não encontrei os campos do cliente neste modelo.</div>';
+
+    return;
+
+  }
+
+
+  for(const f of fields){
+
+    const d=
+      document.createElement(
+        "div"
+      );
+
+
+    d.className=
+      "field"+
+      (
+        f.newValue!==f.value
+        ?
+        " changed"
+        :
+        ""
+      );
+
+
+    d.innerHTML=
+      `<b>${esc(f.label)}</b>
+      <div class="orig">
+        Original: ${esc(f.value||"(vazio)")}
+      </div>
+      <input class="in" value="${esc(f.newValue)}">`;
+
+
+    const inp=
+      d.querySelector(
+        "input"
+      );
+
+
+    inp.onfocus=()=>{
+
+      active=f;
+
+      paintOverlay();
+
+    };
+
+
+    inp.oninput=()=>{
+
+      f.newValue=
+        inp.value;
+
+
+      d.classList.toggle(
+        "changed",
+        f.newValue!==f.value
+      );
+
+
+      out=null;
+
+
+      E.download.disabled=true;
+
+      E.share.disabled=true;
+
+
+      E.generate.disabled=
+        changed().length===0;
+
+
+      paintOverlay();
+
+    };
+
+
+    E.fields.appendChild(d);
+
+  }
+
+}
+
+
+
+function paintOverlay(){
+
+  if(
+    scope
+    &&
+    pageNo===1
+  ){
+
+    E.scope.style.display=
+      "block";
+
+
+    E.scope.style.left=
+      scope.x0*
+      scale+
+      "px";
+
+
+    E.scope.style.top=
+      scope.top*
+      scale+
+      "px";
+
+
+    E.scope.style.width=
+      (
+        scope.x1-
+        scope.x0
+      )*
+      scale+
+      "px";
+
+
+    E.scope.style.height=
+      (
+        scope.bottom-
+        scope.top
+      )*
+      scale+
+      "px";
+
+  }
+  else{
+
+    E.scope.style.display=
+      "none";
+
+  }
+
+
+  if(
+    !active
+    ||
+    active.page!==pageNo
+  ){
+
+    E.box.style.display=
+      "none";
+
+
+    E.preview.style.display=
+      "none";
+
+
+    return;
+
+  }
+
+
+  E.box.style.display=
+    "block";
+
+
+  E.box.dataset.label=
+    active.label;
+
+
+  E.box.style.left=
+    active.x*
+    scale+
+    "px";
+
+
+  E.box.style.top=
+    active.y*
+    scale+
+    "px";
+
+
+  E.box.style.width=
+    active.w*
+    scale+
+    "px";
+
+
+  E.box.style.height=
+    Math.max(
+      9,
+      active.h*
+      scale
+    )+
+    "px";
+
+
+  if(
+    active.newValue!==
+    active.value
+  ){
+
+    E.preview.style.display=
+      "block";
+
+
+    E.preview.style.left=
+      active.x*
+      scale+
+      "px";
+
+
+    E.preview.style.top=
+      active.y*
+      scale+
+      "px";
+
+
+    E.preview.style.width=
+      active.w*
+      scale+
+      "px";
+
+
+    E.preview.style.height=
+      Math.max(
+        9,
+        active.h*
+        scale
+      )+
+      "px";
+
+
+    E.preview.style.fontSize=
+      Math.max(
+        6.5,
+        active.h*
+        .74*
+        scale
+      )+
+      "px";
+
+
+    E.preview.style.lineHeight=
+      Math.max(
+        9,
+        active.h*
+        scale
+      )+
+      "px";
+
+
+    E.preview.textContent=
+      active.newValue;
+
+  }
+  else{
+
+    E.preview.style.display=
+      "none";
+
+  }
+
+}
+
+
+
+async function render(){
+
+  const pg=
+    await pdf.getPage(
+      pageNo
+    );
+
+
+  const vp=
+    pg.getViewport({
+      scale
+    });
+
+
+  const dpr=
+    Math.min(
+      devicePixelRatio||1,
+      1.7
+    );
+
+
+  E.canvas.width=
+    Math.round(
+      vp.width*
+      dpr
+    );
+
+
+  E.canvas.height=
+    Math.round(
+      vp.height*
+      dpr
+    );
+
+
+  E.canvas.style.width=
+    vp.width+
+    "px";
+
+
+  E.canvas.style.height=
+    vp.height+
+    "px";
+
+
+  E.paper.style.width=
+    vp.width+
+    "px";
+
+
+  E.paper.style.height=
+    vp.height+
+    "px";
+
+
+  await pg.render({
+
+    canvasContext:ctx,
+
+    viewport:vp,
+
+    transform:
+      dpr!==1
+      ?
+      [
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+      ]
+      :
+      null,
+
+    background:"white"
+
+  }).promise;
+
+
+  E.pageInfo.textContent=
+    `Página ${pageNo} de ${pdf.numPages}`;
+
+
+  paintOverlay();
+
+}
+
+
+
+E.file.onchange=
+async e=>{
+
+  const file=
+    e.target.files[0];
+
+
+  if(!file)return;
+
+
+  status(
+    "Abrindo e analisando o bloco do cliente..."
+  );
+
+
+  try{
+
+    src=
+      new Uint8Array(
+        await file.arrayBuffer()
+      );
+
+
+    if(
+      String.fromCharCode(
+        ...src.slice(0,5)
+      )
+      !==
+      "%PDF-"
+    ){
+
+      throw new Error(
+        "Arquivo não é PDF válido"
+      );
+
+    }
+
+
+    pdf=
+      await pdfjsLib
+      .getDocument({
+        data:src.slice()
+      })
+      .promise;
+
+
+    pageNo=1;
+
+    out=null;
+
+
+    E.download.disabled=true;
+
+    E.share.disabled=true;
+
+
+    const d=
+      await detect(1);
+
+
+    fields=d.fields;
+
+    scope=d.scope;
+
+
+    E.diag.textContent=
+      d.diag||
+      "Sem diagnóstico.";
+
+
+    fields.forEach(
+      f=>f.newValue=f.value
+    );
+
+
+    renderFields();
+
+
+    await render();
+
+
+    [
+      E.prev,
+      E.next,
+      E.zm,
+      E.zp
+    ]
+    .forEach(
+      x=>x.disabled=false
+    );
+
+
+    if(fields.length){
+
+      active=
+        fields.find(
+          f=>f.label==="Endereço"
+        )
+        ||
+        fields[0];
+
+
+      paintOverlay();
+
+
+      const addr=
+        fields.find(
+          f=>f.label==="Endereço"
+        );
+
+
+      status(
+
+        `Cliente reconhecido.${
+          addr
+          ?
+          ` Endereço encontrado: <b>${esc(addr.value)}</b>.`
+          :
+          ""
+        }`,
+
+        "okmsg"
+
+      );
+
+    }
+    else{
+
+      status(
+
+        "Destinatário/Remetente foi procurado, mas os campos não foram reconhecidos. Veja o diagnóstico.",
+
+        "warnmsg"
+
+      );
+
+    }
+
+  }
+  catch(err){
+
+    console.error(err);
+
+
+    status(
+
+      "Falha ao abrir/analisar: "+
+      esc(
+        err.message||
+        String(err)
+      ),
+
+      "badmsg"
+
+    );
+
+  }
+
+};
+
+
+
+E.prev.onclick=
+async()=>{
+
+  if(
+    pdf
+    &&
+    pageNo>1
+  ){
+
+    pageNo--;
+
+    await render();
+
+  }
+
+};
+
+
+
+E.next.onclick=
+async()=>{
+
+  if(
+    pdf
+    &&
+    pageNo<pdf.numPages
+  ){
+
+    pageNo++;
+
+    await render();
+
+  }
+
+};
+
+
+
+E.zm.onclick=
+async()=>{
+
+  scale=
+    Math.max(
+      .6,
+      scale-.12
+    );
+
+
+  await render();
+
+};
+
+
+
+E.zp.onclick=
+async()=>{
+
+  scale=
+    Math.min(
+      2.6,
+      scale+.12
+    );
+
+
+  await render();
+
+};
+
+
+
+function fitSize(
+  font,
+  text,
+  maxWidth,
+  start,
+  min=5
+){
+
+  let s=start;
+
+
+  while(
+    s>min
+    &&
+    font.widthOfTextAtSize(
+      text,
+      s
+    )
+    >
+    maxWidth
+  ){
+
+    s-=.25;
+
+  }
+
+
+  return s;
+
+}
+
+
+
+E.generate.onclick=
+async()=>{
+
+  const cs=
+    changed();
+
+
+  if(!cs.length)return;
+
+
+  status(
+    "Gerando o PDF com as alterações visuais..."
+  );
+
+
+  try{
+
+    const doc=
+      await PDFLib
+      .PDFDocument
+      .load(
+        src.slice()
+      );
+
+
+    const font=
+      await doc.embedFont(
+        PDFLib
+        .StandardFonts
+        .Helvetica
+      );
+
+
+    const bold=
+      await doc.embedFont(
+        PDFLib
+        .StandardFonts
+        .HelveticaBold
+      );
+
+
+    for(const c of cs){
+
+      const pg=
+        doc.getPages()[
+          c.page-1
+        ];
+
+
+      const ph=
+        pg.getHeight();
+
+
+      const y=
+        ph-
+        c.y-
+        c.h;
+
+
+      pg.drawRectangle({
+
+        x:c.x-1.2,
+
+        y:y-1,
+
+        width:c.w+2.4,
+
+        height:c.h+2,
+
+        color:
+          PDFLib.rgb(
+            1,
+            1,
+            1
+          )
+
+      });
+
+
+      const size=
+        fitSize(
+
+          bold,
+
+          c.newValue,
+
+          Math.max(
+            10,
+            c.w-3
+          ),
+
+          Math.min(
+
+            9,
+
+            Math.max(
+              5.5,
+              c.h*.72
+            )
+
+          ),
+
+          5
+
+        );
+
+
+      pg.drawText(
+        c.newValue,
+        {
+
+          x:c.x+1,
+
+          y:
+            y+
+            Math.max(
+              1,
+              (
+                c.h-size
+              )/
+              2
+            ),
+
+          size,
+
+          font:bold,
+
+          color:
+            PDFLib.rgb(
+              0,
+              0,
+              0
+            ),
+
+          maxWidth:
+            Math.max(
+              8,
+              c.w-2
+            )
+
+        }
+      );
+
+    }
+
+
+    out=
+      await doc.save({
+        useObjectStreams:true
+      });
+
+
+    E.download.disabled=false;
+
+    E.share.disabled=false;
+
+
+    status(
+
+      `PDF gerado com <b>${cs.length}</b> alteração${cs.length===1?"":"ões"} visível(is).`,
+
+      "okmsg"
+
+    );
+
+  }
+  catch(err){
+
+    console.error(err);
+
+
+    status(
+
+      "Erro ao gerar: "+
+      esc(
+        err.message||
+        String(err)
+      ),
+
+      "badmsg"
+
+    );
+
+  }
+
+};
+
+
+
+E.download.onclick=()=>{
+
+  if(!out)return;
+
+
+  const blob=
+    new Blob(
+      [out],
+      {
+        type:
+          "application/pdf"
+      }
+    );
+
+
+  const url=
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const a=
+    document.createElement(
+      "a"
+    );
+
+
+  a.href=url;
+
+
+  a.download=
+    "danfe_validade_fiscal.pdf";
+
+
+  document.body.appendChild(a);
+
+
+  a.click();
+
+
+  a.remove();
+
+
+  setTimeout(
+    ()=>
+      URL.revokeObjectURL(
+        url
+      ),
+    1200
+  );
+
+};
+
+
+
+E.share.onclick=
+async()=>{
+
+  if(!out)return;
+
+
+  const blob=
+    new Blob(
+      [out],
+      {
+        type:
+          "application/pdf"
+      }
+    );
+
+
+  const file=
+    new File(
+
+      [blob],
+
+      "danfe_validade_fiscal.pdf",
+
+      {
+        type:
+          "application/pdf"
+      }
+
+    );
+
+
+  const title=
+    E.shareTitle.value.trim()
+    ||
+    "Documento PDF";
+
+
+  const text=
+    E.shareText.value.trim();
+
+
+  const reference=
+    E.shareReference.value.trim();
+
+
+  const finalText=
+    [
+      text,
+      reference
+    ]
+    .filter(Boolean)
+    .join("\n\n");
+
+
+  try{
+
+    if(
+      navigator.share
+      &&
+      navigator.canShare
+      &&
+      navigator.canShare({
+        files:[file]
+      })
+    ){
+
+      await navigator.share({
+
+        title,
+
+        text:finalText,
+
+        files:[file]
+
+      });
+
+
+      status(
+        "Documento compartilhado.",
+        "okmsg"
+      );
+
+
+      return;
+
+    }
+
+
+    if(navigator.share){
+
+      await navigator.share({
+
+        title,
+
+        text:finalText
+
+      });
+
+
+      status(
+
+        "Seu navegador não permitiu compartilhar o PDF diretamente. A mensagem foi aberta para compartilhamento.",
+
+        "warnmsg"
+
+      );
+
+
+      return;
+
+    }
+
+
+    status(
+
+      "Este navegador não possui compartilhamento direto. Use o botão Baixar PDF.",
+
+      "warnmsg"
+
+    );
+
+  }
+  catch(err){
+
+    if(
+      err.name==="AbortError"
+    ){
+
+      status(
+        "Compartilhamento cancelado.",
+        "warnmsg"
+      );
+
+
+      return;
+
+    }
+
+
+    console.error(err);
+
+
+    status(
+
+      "Não foi possível abrir o compartilhamento: "+
+      esc(
+        err.message||
+        String(err)
+      ),
+
+      "badmsg"
+
+    );
+
+  }
+
+};
+
+
+})();
+</script>
+
+</body>
+</html>
