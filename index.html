@@ -2355,36 +2355,26 @@ E.download.onclick=()=>{
 
 
 
-E.share.onclick=
-async()=>{
+E.share.onclick=async()=>{
 
   if(!out)return;
-
 
   const blob=
     new Blob(
       [out],
       {
-        type:
-          "application/pdf"
+        type:"application/pdf"
       }
     );
-
 
   const file=
     new File(
-
       [blob],
-
       "danfe_validade_fiscal.pdf",
-
       {
-        type:
-          "application/pdf"
+        type:"application/pdf"
       }
-
     );
-
 
   const title=
     E.shareTitle.value.trim()
@@ -2392,7 +2382,47 @@ async()=>{
     "Documento PDF";
 
 
-  const text=
+  // PEGA OS VALORES ATUAIS, JÁ EDITADOS
+  const nomeField=
+    fields.find(
+      f=>f.label==="Nome / Razão Social"
+    );
+
+  const enderecoField=
+    fields.find(
+      f=>f.label==="Endereço"
+    );
+
+  const cepField=
+    fields.find(
+      f=>f.label==="CEP"
+    );
+
+
+  const nome=
+    nomeField
+    ?
+    nomeField.newValue.trim()
+    :
+    "";
+
+  const endereco=
+    enderecoField
+    ?
+    enderecoField.newValue.trim()
+    :
+    "";
+
+  const cep=
+    cepField
+    ?
+    cepField.newValue.trim()
+    :
+    "";
+
+
+  // TEXTO QUE VOCÊ PODE EDITAR MANUALMENTE NO PAINEL
+  const textoPersonalizado=
     E.shareText.value.trim();
 
 
@@ -2400,9 +2430,41 @@ async()=>{
     E.shareReference.value.trim();
 
 
+  // MONTA AUTOMATICAMENTE A MENSAGEM
+  const dadosAtualizados=[];
+
+  if(nome){
+    dadosAtualizados.push(
+      `Nome: ${nome}`
+    );
+  }
+
+  if(endereco){
+    dadosAtualizados.push(
+      `Endereço: ${endereco}`
+    );
+  }
+
+  if(cep){
+    dadosAtualizados.push(
+      `CEP: ${cep}`
+    );
+  }
+
+
+  const blocoDados=
+    dadosAtualizados.join("\n");
+
+
+  const chamada=
+    "Baixe o aplicativo para fazer você também, ou acesse nosso site.";
+
+
   const finalText=
     [
-      text,
+      textoPersonalizado,
+      blocoDados,
+      chamada,
       reference
     ]
     .filter(Boolean)
@@ -2422,14 +2484,73 @@ async()=>{
     ){
 
       await navigator.share({
-
         title,
-
         text:finalText,
-
         files:[file]
-
       });
+
+      status(
+        "Documento compartilhado.",
+        "okmsg"
+      );
+
+      return;
+
+    }
+
+
+    if(navigator.share){
+
+      await navigator.share({
+        title,
+        text:finalText
+      });
+
+      status(
+        "Seu navegador não permitiu compartilhar o PDF diretamente. A mensagem foi aberta para compartilhamento.",
+        "warnmsg"
+      );
+
+      return;
+
+    }
+
+
+    status(
+      "Este navegador não possui compartilhamento direto. Use o botão Baixar PDF.",
+      "warnmsg"
+    );
+
+  }
+  catch(err){
+
+    if(
+      err.name==="AbortError"
+    ){
+
+      status(
+        "Compartilhamento cancelado.",
+        "warnmsg"
+      );
+
+      return;
+
+    }
+
+    console.error(err);
+
+    status(
+      "Não foi possível abrir o compartilhamento: "+
+      esc(
+        err.message||
+        String(err)
+      ),
+      "badmsg"
+    );
+
+  }
+
+};
 
 
       status(
