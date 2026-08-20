@@ -19,7 +19,7 @@
   --b:#8d7cff;
   --ok:#62e4a5;
   --warn:#ffb84c;
-  --bad:#ff7695
+  --bad:#ff7695;
 }
 
 *{box-sizing:border-box}
@@ -30,13 +30,13 @@ body{
     radial-gradient(circle at 10% 0,rgba(97,227,255,.10),transparent 28%),
     var(--bg);
   color:var(--text);
-  font-family:Inter,system-ui,Segoe UI,Arial,sans-serif
+  font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
 }
 
 .app{
   max-width:1500px;
   margin:auto;
-  padding:18px
+  padding:18px;
 }
 
 .top{
@@ -44,31 +44,31 @@ body{
   justify-content:space-between;
   gap:12px;
   align-items:center;
-  margin-bottom:14px
+  margin-bottom:14px;
 }
 
 .top h1{
   margin:0;
-  font-size:22px
+  font-size:22px;
 }
 
 .top p{
   margin:5px 0 0;
   color:var(--muted);
-  font-size:12px
+  font-size:12px;
 }
 
 .grid{
   display:grid;
   grid-template-columns:420px 1fr;
-  gap:14px
+  gap:14px;
 }
 
 .panel{
   background:rgba(255,255,255,.025);
   border:1px solid var(--line);
   border-radius:18px;
-  box-shadow:0 18px 55px rgba(0,0,0,.4)
+  box-shadow:0 18px 55px rgba(0,0,0,.4);
 }
 
 .side{
@@ -76,18 +76,18 @@ body{
   position:sticky;
   top:14px;
   max-height:calc(100vh - 28px);
-  overflow:auto
+  overflow:auto;
 }
 
 .sec{
   padding-bottom:13px;
   margin-bottom:13px;
-  border-bottom:1px solid var(--line)
+  border-bottom:1px solid var(--line);
 }
 
 .sec:last-child{
   border:0;
-  margin:0
+  margin:0;
 }
 
 .drop{
@@ -97,19 +97,19 @@ body{
   padding:15px;
   text-align:center;
   background:rgba(97,227,255,.04);
-  cursor:pointer
+  cursor:pointer;
 }
 
 .drop b{
-  display:block
+  display:block;
 }
 
 .drop small{
-  color:var(--muted)
+  color:var(--muted);
 }
 
 input[type=file]{
-  display:none
+  display:none;
 }
 
 .status{
@@ -119,45 +119,45 @@ input[type=file]{
   border:1px solid var(--line);
   border-radius:10px;
   padding:9px;
-  background:rgba(255,255,255,.02)
+  background:rgba(255,255,255,.02);
 }
 
 .okmsg{
   color:#baffdd;
   border-color:rgba(98,228,165,.25);
-  background:rgba(98,228,165,.05)
+  background:rgba(98,228,165,.05);
 }
 
 .warnmsg{
   color:#ffe1aa;
   border-color:rgba(255,184,76,.25);
-  background:rgba(255,184,76,.05)
+  background:rgba(255,184,76,.05);
 }
 
 .badmsg{
   color:#ffc0cf;
-  border-color:rgba(255,118,149,.25)
+  border-color:rgba(255,118,149,.25);
 }
 
 .fields{
   display:grid;
-  gap:8px
+  gap:8px;
 }
 
 .field{
   border:1px solid var(--line);
   border-radius:11px;
   padding:8px;
-  background:rgba(255,255,255,.02)
+  background:rgba(255,255,255,.02);
 }
 
 .field.changed{
   border-color:rgba(98,228,165,.35);
-  background:rgba(98,228,165,.04)
+  background:rgba(98,228,165,.04);
 }
 
 .field b{
-  font-size:11px
+  font-size:11px;
 }
 
 .orig{
@@ -166,7 +166,7 @@ input[type=file]{
   margin:4px 0 6px;
   white-space:nowrap;
   overflow:hidden;
-  text-overflow:ellipsis
+  text-overflow:ellipsis;
 }
 
 .in{
@@ -176,17 +176,17 @@ input[type=file]{
   border:1px solid var(--line);
   background:#091429;
   color:var(--text);
-  outline:none
+  outline:none;
 }
 
 .in:focus{
-  border-color:rgba(97,227,255,.55)
+  border-color:rgba(97,227,255,.55);
 }
 
 textarea.in{
   resize:vertical;
   min-height:80px;
-  font-family:inherit
+  font-family:inherit;
 }
 
 .btn{
@@ -198,26 +198,26 @@ textarea.in{
   color:var(--text);
   font-weight:750;
   cursor:pointer;
-  margin-top:7px
+  margin-top:7px;
 }
 
 .btn.ok{
   background:linear-gradient(135deg,#5be3a2,#80efd9);
-  color:#071a13
+  color:#071a13;
 }
 
 .btn.primary{
   background:linear-gradient(135deg,var(--a),var(--b));
-  color:#06101e
+  color:#06101e;
 }
 
 .btn:disabled{
   opacity:.4;
-  cursor:not-allowed
+  cursor:not-allowed;
 }
 
 .viewer{
-  overflow:hidden
+  overflow:hidden;
 }
 
 .bar{
@@ -225,7 +225,7 @@ textarea.in{
   justify-content:space-between;
   gap:8px;
   padding:10px 12px;
-  border-bottom:1px solid var(--line)
+  border-bottom:1px solid var(--line);
 }
 
 .mini{
@@ -234,7 +234,7 @@ textarea.in{
   border-radius:8px;
   background:#1a2a49;
   color:#fff;
-  cursor:pointer
+  cursor:pointer;
 }
 
 .stage{
@@ -244,31 +244,31 @@ textarea.in{
   display:flex;
   justify-content:center;
   align-items:flex-start;
-  background:rgba(255,255,255,.015)
+  background:rgba(255,255,255,.015);
 }
 
 .paper{
   position:relative;
   background:#fff;
   box-shadow:0 20px 55px rgba(0,0,0,.5);
-  line-height:0
+  line-height:0;
 }
 
 .paper canvas{
-  display:block
+  display:block;
 }
 
 .overlay{
   position:absolute;
   inset:0;
-  pointer-events:none
+  pointer-events:none;
 }
 
 .scope{
   position:absolute;
   border:2px solid rgba(97,227,255,.55);
   background:rgba(97,227,255,.04);
-  display:none
+  display:none;
 }
 
 .scope:before{
@@ -280,14 +280,14 @@ textarea.in{
   color:#fff;
   font:700 8px Arial;
   padding:4px 6px;
-  border-radius:4px
+  border-radius:4px;
 }
 
 .box{
   position:absolute;
   border:2px solid #ffad2f;
   background:rgba(255,173,47,.12);
-  display:none
+  display:none;
 }
 
 .box:after{
@@ -299,7 +299,7 @@ textarea.in{
   color:#251200;
   font:700 8px Arial;
   padding:4px 6px;
-  border-radius:4px
+  border-radius:4px;
 }
 
 .preview{
@@ -311,24 +311,24 @@ textarea.in{
   font-weight:700;
   white-space:nowrap;
   overflow:hidden;
-  padding:0 1px
+  padding:0 1px;
 }
 
 .diag{
   font-size:9px;
   color:var(--muted);
   line-height:1.45;
-  white-space:pre-wrap
+  white-space:pre-wrap;
 }
 
 @media(max-width:980px){
   .grid{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
   .side{
     position:static;
-    max-height:none
+    max-height:none;
   }
 }
 </style>
@@ -375,7 +375,6 @@ textarea.in{
 
       </div>
 
-
       <div class="sec">
 
         <div id="fields" class="fields">
@@ -387,7 +386,6 @@ textarea.in{
         </div>
 
       </div>
-
 
       <div class="sec">
 
@@ -409,13 +407,11 @@ textarea.in{
 
       </div>
 
-
       <div class="sec">
 
         <b style="font-size:11px">
           Compartilhamento
         </b>
-
 
         <div
           class="field"
@@ -433,7 +429,6 @@ textarea.in{
 
         </div>
 
-
         <div class="field">
 
           <b>Mensagem</b>
@@ -446,7 +441,6 @@ textarea.in{
           >Segue o documento atualizado para conferência.</textarea>
 
         </div>
-
 
         <div class="field">
 
@@ -461,7 +455,6 @@ textarea.in{
 
         </div>
 
-
         <button
           id="share"
           class="btn primary"
@@ -471,7 +464,6 @@ textarea.in{
         </button>
 
       </div>
-
 
       <div class="sec">
 
@@ -490,7 +482,6 @@ textarea.in{
       </div>
 
     </aside>
-
 
     <main class="panel viewer">
 
@@ -516,17 +507,12 @@ textarea.in{
 
           <span
             id="pageInfo"
-            style="
-              font-size:11px;
-              color:#94a8c5;
-              margin-left:7px
-            "
+            style="font-size:11px;color:#94a8c5;margin-left:7px"
           >
             Nenhum PDF
           </span>
 
         </div>
-
 
         <div>
 
@@ -549,7 +535,6 @@ textarea.in{
         </div>
 
       </div>
-
 
       <div class="stage">
 
@@ -586,15 +571,12 @@ textarea.in{
 
 </div>
 
-
 <script>
 (function(){
 
 "use strict";
 
-
 const $=id=>document.getElementById(id);
-
 
 const E={
 
@@ -640,16 +622,13 @@ const E={
 
 };
 
-
 const ctx=E.canvas.getContext(
   "2d",
   {alpha:false}
 );
 
-
 pdfjsLib.GlobalWorkerOptions.workerSrc=
 "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-
 
 const LABELS=[
   "Nome / Razão Social",
@@ -663,64 +642,38 @@ const LABELS=[
   "Fone/Fax"
 ];
 
-
 let src=null;
-
 let out=null;
-
 let pdf=null;
-
 let pageNo=1;
-
 let scale=1.25;
-
 let fields=[];
-
 let active=null;
-
 let scope=null;
-
-
 
 function norm(s){
 
   return String(s||"")
-
-  .normalize("NFD")
-
-  .replace(/[\u0300-\u036f]/g,"")
-
-  .toLowerCase()
-
-  .replace(/\s+/g," ")
-
-  .trim();
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .toLowerCase()
+    .replace(/\s+/g," ")
+    .trim();
 
 }
-
-
 
 function esc(s){
 
   return String(s||"")
-
-  .replace(/[&<>"']/g,m=>({
-
-    "&":"&amp;",
-
-    "<":"&lt;",
-
-    ">":"&gt;",
-
-    '"':"&quot;",
-
-    "'":"&#39;"
-
-  }[m]));
+    .replace(/[&<>"']/g,m=>({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[m]));
 
 }
-
-
 
 function status(t,c=""){
 
@@ -731,8 +684,6 @@ function status(t,c=""){
 
 }
 
-
-
 function changed(){
 
   return fields.filter(
@@ -741,39 +692,27 @@ function changed(){
 
 }
 
-
-
 function wordsForLine(items,y,tol=2.8){
 
   return items
-
-  .filter(
-    x=>Math.abs(x.y-y)<=tol
-  )
-
-  .sort(
-    (a,b)=>a.x-b.x
-  );
+    .filter(
+      x=>Math.abs(x.y-y)<=tol
+    )
+    .sort(
+      (a,b)=>a.x-b.x
+    );
 
 }
-
-
 
 function joinWords(arr){
 
   return arr
-
-  .map(x=>x.text)
-
-  .join(" ")
-
-  .replace(/\s+/g," ")
-
-  .trim();
+    .map(x=>x.text)
+    .join(" ")
+    .replace(/\s+/g," ")
+    .trim();
 
 }
-
-
 
 async function getWords(p){
 
@@ -781,13 +720,14 @@ async function getWords(p){
     await pdf.getPage(p);
 
   const vp=
-    pg.getViewport({scale:1});
+    pg.getViewport({
+      scale:1
+    });
 
   const tc=
     await pg.getTextContent();
 
   const arr=[];
-
 
   for(const i of tc.items){
 
@@ -796,13 +736,11 @@ async function getWords(p){
 
     if(!text)continue;
 
-
     const tr=
       pdfjsLib.Util.transform(
         vp.transform,
         i.transform
       );
-
 
     const h=
       Math.max(
@@ -814,7 +752,6 @@ async function getWords(p){
         )
       );
 
-
     const x=tr[4];
 
     const y=tr[5]-h;
@@ -825,44 +762,33 @@ async function getWords(p){
         i.width||1
       );
 
-
-    // divide itens compostos para melhorar reconhecimento de "Nome / Razão Social"
-
     const parts=[
       ...text.matchAll(/\S+/g)
     ];
 
-
     if(parts.length<=1){
 
       arr.push({
-
         text,
-
         x,
-
         y,
-
         w,
-
         h,
-
         x1:x+w,
-
         cx:x+w/2
-
       });
 
       continue;
 
     }
 
-
     for(const m of parts){
 
-      const st=m.index||0;
+      const st=
+        m.index||0;
 
-      const len=m[0].length;
+      const len=
+        m[0].length;
 
       const tw=
         w*(
@@ -872,7 +798,6 @@ async function getWords(p){
             text.length
           )
         );
-
 
       const tx=
         x+
@@ -884,29 +809,19 @@ async function getWords(p){
           )
         );
 
-
       arr.push({
-
         text:m[0],
-
         x:tx,
-
         y,
-
         w:tw,
-
         h,
-
         x1:tx+tw,
-
         cx:tx+tw/2
-
       });
 
     }
 
   }
-
 
   return arr.sort(
     (a,b)=>
@@ -916,12 +831,9 @@ async function getWords(p){
 
 }
 
-
-
 function makeLines(items){
 
   const ls=[];
-
 
   for(const it of items){
 
@@ -929,7 +841,6 @@ function makeLines(items){
       ls.find(
         z=>Math.abs(z.y-it.y)<2.8
       );
-
 
     if(!l){
 
@@ -942,9 +853,7 @@ function makeLines(items){
 
     }
 
-
     l.items.push(it);
-
 
     l.y=
       l.items.reduce(
@@ -955,11 +864,9 @@ function makeLines(items){
 
   }
 
-
   ls.sort(
     (a,b)=>a.y-b.y
   );
-
 
   for(const l of ls){
 
@@ -967,10 +874,8 @@ function makeLines(items){
       (a,b)=>a.x-b.x
     );
 
-
     l.text=
       joinWords(l.items);
-
 
     l.x0=
       Math.min(
@@ -979,14 +884,12 @@ function makeLines(items){
         )
       );
 
-
     l.x1=
       Math.max(
         ...l.items.map(
           x=>x.x1
         )
       );
-
 
     l.bottom=
       Math.max(
@@ -997,24 +900,19 @@ function makeLines(items){
 
   }
 
-
   return ls;
 
 }
-
-
 
 function phraseMatch(line,label){
 
   const want=
     norm(label).split(" ");
 
-
   const have=
     line.items.map(
       x=>norm(x.text)
     );
-
 
   for(
     let i=0;
@@ -1023,7 +921,6 @@ function phraseMatch(line,label){
   ){
 
     let ok=true;
-
 
     for(
       let j=0;
@@ -1036,13 +933,11 @@ function phraseMatch(line,label){
       ){
 
         ok=false;
-
         break;
 
       }
 
     }
-
 
     if(ok){
 
@@ -1051,7 +946,6 @@ function phraseMatch(line,label){
           i,
           i+want.length
         );
-
 
       return {
 
@@ -1075,14 +969,11 @@ function phraseMatch(line,label){
 
   }
 
-
-  // tolera quando PDF.js entrega o rótulo inteiro em um item
-
   if(
     norm(line.text)
-    .includes(
-      norm(label)
-    )
+      .includes(
+        norm(label)
+      )
   ){
 
     return {
@@ -1099,12 +990,9 @@ function phraseMatch(line,label){
 
   }
 
-
   return null;
 
 }
-
-
 
 function findSection(lines){
 
@@ -1112,19 +1000,17 @@ function findSection(lines){
     lines.find(
       l=>
         norm(l.text)
-        .includes(
-          "destinatario/remetente"
-        )
+          .includes(
+            "destinatario/remetente"
+          )
         ||
         norm(l.text)
-        .includes(
-          "destinatario / remetente"
-        )
+          .includes(
+            "destinatario / remetente"
+          )
     );
 
-
   if(!head)return null;
-
 
   const end=
     lines.find(
@@ -1140,12 +1026,11 @@ function findSection(lines){
         .some(
           s=>
             norm(l.text)
-            .includes(
-              norm(s)
-            )
+              .includes(
+                norm(s)
+              )
         )
     );
-
 
   return {
 
@@ -1172,8 +1057,6 @@ function findSection(lines){
 
 }
 
-
-
 function sameRow(a,b){
 
   return Math.abs(
@@ -1182,21 +1065,16 @@ function sameRow(a,b){
 
 }
 
-
-
 async function detect(p){
 
   const items=
     await getWords(p);
 
-
   const lines=
     makeLines(items);
 
-
   const sec=
     findSection(lines);
-
 
   if(!sec){
 
@@ -1213,9 +1091,7 @@ async function detect(p){
 
   }
 
-
   const matches=[];
-
 
   for(const l of lines){
 
@@ -1224,7 +1100,6 @@ async function detect(p){
       l.y>=sec.bottom
     )
     continue;
-
 
     for(
       const label
@@ -1236,7 +1111,6 @@ async function detect(p){
           l,
           label
         );
-
 
       if(m){
 
@@ -1256,11 +1130,7 @@ async function detect(p){
 
   }
 
-
-  // elimina duplicatas do mesmo rótulo e mantém a primeira ocorrência dentro do bloco
-
   const unique=[];
-
 
   for(
     const label
@@ -1269,17 +1139,14 @@ async function detect(p){
 
     const xs=
       matches
-
-      .filter(
-        m=>m.label===label
-      )
-
-      .sort(
-        (a,b)=>
-          a.y-b.y||
-          a.x-b.x
-      );
-
+        .filter(
+          m=>m.label===label
+        )
+        .sort(
+          (a,b)=>
+            a.y-b.y||
+            a.x-b.x
+        );
 
     if(xs[0]){
 
@@ -1291,29 +1158,23 @@ async function detect(p){
 
   }
 
-
   const result=[];
-
 
   for(const m of unique){
 
     const rowPeers=
       unique
-
-      .filter(
-        z=>sameRow(z,m)
-      )
-
-      .sort(
-        (a,b)=>a.x-b.x
-      );
-
+        .filter(
+          z=>sameRow(z,m)
+        )
+        .sort(
+          (a,b)=>a.x-b.x
+        );
 
     const idx=
       rowPeers.findIndex(
         z=>z.label===m.label
       );
-
 
     let cellRight=
       idx>=0
@@ -1323,10 +1184,6 @@ async function detect(p){
       rowPeers[idx+1].x-1
       :
       560;
-
-
-    // No DANFE há colunas de datas à direita.
-    // Para os campos do cliente, limita a área.
 
     if(m.x<400){
 
@@ -1338,21 +1195,19 @@ async function detect(p){
 
     }
 
-
     const nextLabelY=
       Math.min(
         ...unique
-        .filter(
-          z=>z.y>m.y+5.5
-        )
-        .map(
-          z=>z.y
-        )
-        .concat(
-          [sec.bottom]
-        )
+          .filter(
+            z=>z.y>m.y+5.5
+          )
+          .map(
+            z=>z.y
+          )
+          .concat(
+            [sec.bottom]
+          )
       );
-
 
     const valueLines=
       lines.filter(
@@ -1362,12 +1217,7 @@ async function detect(p){
           l.y<nextLabelY-0.3
       );
 
-
-    // pega a primeira linha de valor
-    // e filtra pela célula horizontal
-
     let vals=[];
-
 
     for(
       const vl
@@ -1382,7 +1232,6 @@ async function detect(p){
             it.cx<cellRight
         );
 
-
       if(inside.length){
 
         vals=inside;
@@ -1393,10 +1242,8 @@ async function detect(p){
 
     }
 
-
     const value=
       joinWords(vals);
-
 
     const vy=
       vals.length
@@ -1409,7 +1256,6 @@ async function detect(p){
       :
       m.bottom+1.5;
 
-
     const vh=
       vals.length
       ?
@@ -1420,7 +1266,6 @@ async function detect(p){
       )-vy
       :
       8.5;
-
 
     result.push({
 
@@ -1452,17 +1297,13 @@ async function detect(p){
 
   }
 
-
   const diag=
-    result.map(
-
-      f=>
-
-      `${f.label}: "${f.value}"  x=${f.x.toFixed(1)} y=${f.y.toFixed(1)} w=${f.w.toFixed(1)} h=${f.h.toFixed(1)}`
-
-    )
-    .join("\n");
-
+    result
+      .map(
+        f=>
+        `${f.label}: "${f.value}"  x=${f.x.toFixed(1)} y=${f.y.toFixed(1)} w=${f.w.toFixed(1)} h=${f.h.toFixed(1)}`
+      )
+      .join("\n");
 
   return {
 
@@ -1486,12 +1327,9 @@ async function detect(p){
 
 }
 
-
-
 function renderFields(){
 
   E.fields.innerHTML="";
-
 
   if(!fields.length){
 
@@ -1502,14 +1340,12 @@ function renderFields(){
 
   }
 
-
   for(const f of fields){
 
     const d=
       document.createElement(
         "div"
       );
-
 
     d.className=
       "field"+
@@ -1521,7 +1357,6 @@ function renderFields(){
         ""
       );
 
-
     d.innerHTML=
       `<b>${esc(f.label)}</b>
       <div class="orig">
@@ -1529,12 +1364,10 @@ function renderFields(){
       </div>
       <input class="in" value="${esc(f.newValue)}">`;
 
-
     const inp=
       d.querySelector(
         "input"
       );
-
 
     inp.onfocus=()=>{
 
@@ -1544,43 +1377,34 @@ function renderFields(){
 
     };
 
-
     inp.oninput=()=>{
 
       f.newValue=
         inp.value;
-
 
       d.classList.toggle(
         "changed",
         f.newValue!==f.value
       );
 
-
       out=null;
-
 
       E.download.disabled=true;
 
       E.share.disabled=true;
 
-
       E.generate.disabled=
         changed().length===0;
-
 
       paintOverlay();
 
     };
-
 
     E.fields.appendChild(d);
 
   }
 
 }
-
-
 
 function paintOverlay(){
 
@@ -1593,18 +1417,15 @@ function paintOverlay(){
     E.scope.style.display=
       "block";
 
-
     E.scope.style.left=
       scope.x0*
       scale+
       "px";
 
-
     E.scope.style.top=
       scope.top*
       scale+
       "px";
-
 
     E.scope.style.width=
       (
@@ -1613,7 +1434,6 @@ function paintOverlay(){
       )*
       scale+
       "px";
-
 
     E.scope.style.height=
       (
@@ -1631,7 +1451,6 @@ function paintOverlay(){
 
   }
 
-
   if(
     !active
     ||
@@ -1641,41 +1460,33 @@ function paintOverlay(){
     E.box.style.display=
       "none";
 
-
     E.preview.style.display=
       "none";
-
 
     return;
 
   }
 
-
   E.box.style.display=
     "block";
 
-
   E.box.dataset.label=
     active.label;
-
 
   E.box.style.left=
     active.x*
     scale+
     "px";
 
-
   E.box.style.top=
     active.y*
     scale+
     "px";
 
-
   E.box.style.width=
     active.w*
     scale+
     "px";
-
 
   E.box.style.height=
     Math.max(
@@ -1685,7 +1496,6 @@ function paintOverlay(){
     )+
     "px";
 
-
   if(
     active.newValue!==
     active.value
@@ -1694,24 +1504,20 @@ function paintOverlay(){
     E.preview.style.display=
       "block";
 
-
     E.preview.style.left=
       active.x*
       scale+
       "px";
-
 
     E.preview.style.top=
       active.y*
       scale+
       "px";
 
-
     E.preview.style.width=
       active.w*
       scale+
       "px";
-
 
     E.preview.style.height=
       Math.max(
@@ -1720,7 +1526,6 @@ function paintOverlay(){
         scale
       )+
       "px";
-
 
     E.preview.style.fontSize=
       Math.max(
@@ -1731,7 +1536,6 @@ function paintOverlay(){
       )+
       "px";
 
-
     E.preview.style.lineHeight=
       Math.max(
         9,
@@ -1739,7 +1543,6 @@ function paintOverlay(){
         scale
       )+
       "px";
-
 
     E.preview.textContent=
       active.newValue;
@@ -1754,8 +1557,6 @@ function paintOverlay(){
 
 }
 
-
-
 async function render(){
 
   const pg=
@@ -1763,12 +1564,10 @@ async function render(){
       pageNo
     );
 
-
   const vp=
     pg.getViewport({
       scale
     });
-
 
   const dpr=
     Math.min(
@@ -1776,13 +1575,11 @@ async function render(){
       1.7
     );
 
-
   E.canvas.width=
     Math.round(
       vp.width*
       dpr
     );
-
 
   E.canvas.height=
     Math.round(
@@ -1790,26 +1587,21 @@ async function render(){
       dpr
     );
 
-
   E.canvas.style.width=
     vp.width+
     "px";
-
 
   E.canvas.style.height=
     vp.height+
     "px";
 
-
   E.paper.style.width=
     vp.width+
     "px";
 
-
   E.paper.style.height=
     vp.height+
     "px";
-
 
   await pg.render({
 
@@ -1835,16 +1627,12 @@ async function render(){
 
   }).promise;
 
-
   E.pageInfo.textContent=
     `Página ${pageNo} de ${pdf.numPages}`;
-
 
   paintOverlay();
 
 }
-
-
 
 E.file.onchange=
 async e=>{
@@ -1852,14 +1640,11 @@ async e=>{
   const file=
     e.target.files[0];
 
-
   if(!file)return;
-
 
   status(
     "Abrindo e analisando o bloco do cliente..."
   );
-
 
   try{
 
@@ -1867,7 +1652,6 @@ async e=>{
       new Uint8Array(
         await file.arrayBuffer()
       );
-
 
     if(
       String.fromCharCode(
@@ -1883,49 +1667,39 @@ async e=>{
 
     }
 
-
     pdf=
       await pdfjsLib
-      .getDocument({
-        data:src.slice()
-      })
-      .promise;
-
+        .getDocument({
+          data:src.slice()
+        })
+        .promise;
 
     pageNo=1;
 
     out=null;
 
-
     E.download.disabled=true;
 
     E.share.disabled=true;
 
-
     const d=
       await detect(1);
-
 
     fields=d.fields;
 
     scope=d.scope;
 
-
     E.diag.textContent=
       d.diag||
       "Sem diagnóstico.";
-
 
     fields.forEach(
       f=>f.newValue=f.value
     );
 
-
     renderFields();
 
-
     await render();
-
 
     [
       E.prev,
@@ -1937,7 +1711,6 @@ async e=>{
       x=>x.disabled=false
     );
 
-
     if(fields.length){
 
       active=
@@ -1947,15 +1720,12 @@ async e=>{
         ||
         fields[0];
 
-
       paintOverlay();
-
 
       const addr=
         fields.find(
           f=>f.label==="Endereço"
         );
-
 
       status(
 
@@ -1989,7 +1759,6 @@ async e=>{
 
     console.error(err);
 
-
     status(
 
       "Falha ao abrir/analisar: "+
@@ -2005,8 +1774,6 @@ async e=>{
   }
 
 };
-
-
 
 E.prev.onclick=
 async()=>{
@@ -2025,8 +1792,6 @@ async()=>{
 
 };
 
-
-
 E.next.onclick=
 async()=>{
 
@@ -2044,8 +1809,6 @@ async()=>{
 
 };
 
-
-
 E.zm.onclick=
 async()=>{
 
@@ -2055,12 +1818,9 @@ async()=>{
       scale-.12
     );
 
-
   await render();
 
 };
-
-
 
 E.zp.onclick=
 async()=>{
@@ -2071,12 +1831,9 @@ async()=>{
       scale+.12
     );
 
-
   await render();
 
 };
-
-
 
 function fitSize(
   font,
@@ -2087,7 +1844,6 @@ function fitSize(
 ){
 
   let s=start;
-
 
   while(
     s>min
@@ -2104,12 +1860,9 @@ function fitSize(
 
   }
 
-
   return s;
 
 }
-
-
 
 E.generate.onclick=
 async()=>{
@@ -2117,40 +1870,34 @@ async()=>{
   const cs=
     changed();
 
-
   if(!cs.length)return;
-
 
   status(
     "Gerando o PDF com as alterações visuais..."
   );
 
-
   try{
 
     const doc=
       await PDFLib
-      .PDFDocument
-      .load(
-        src.slice()
-      );
-
+        .PDFDocument
+        .load(
+          src.slice()
+        );
 
     const font=
       await doc.embedFont(
         PDFLib
-        .StandardFonts
-        .Helvetica
+          .StandardFonts
+          .Helvetica
       );
-
 
     const bold=
       await doc.embedFont(
         PDFLib
-        .StandardFonts
-        .HelveticaBold
+          .StandardFonts
+          .HelveticaBold
       );
-
 
     for(const c of cs){
 
@@ -2159,16 +1906,13 @@ async()=>{
           c.page-1
         ];
 
-
       const ph=
         pg.getHeight();
-
 
       const y=
         ph-
         c.y-
         c.h;
-
 
       pg.drawRectangle({
 
@@ -2188,7 +1932,6 @@ async()=>{
           )
 
       });
-
 
       const size=
         fitSize(
@@ -2216,7 +1959,6 @@ async()=>{
           5
 
         );
-
 
       pg.drawText(
         c.newValue,
@@ -2256,17 +1998,14 @@ async()=>{
 
     }
 
-
     out=
       await doc.save({
         useObjectStreams:true
       });
 
-
     E.download.disabled=false;
 
     E.share.disabled=false;
-
 
     status(
 
@@ -2280,7 +2019,6 @@ async()=>{
   catch(err){
 
     console.error(err);
-
 
     status(
 
@@ -2298,50 +2036,38 @@ async()=>{
 
 };
 
-
-
 E.download.onclick=()=>{
 
   if(!out)return;
-
 
   const blob=
     new Blob(
       [out],
       {
-        type:
-          "application/pdf"
+        type:"application/pdf"
       }
     );
-
 
   const url=
     URL.createObjectURL(
       blob
     );
 
-
   const a=
     document.createElement(
       "a"
     );
 
-
   a.href=url;
-
 
   a.download=
     "danfe_validade_fiscal.pdf";
 
-
   document.body.appendChild(a);
-
 
   a.click();
 
-
   a.remove();
-
 
   setTimeout(
     ()=>
@@ -2353,9 +2079,8 @@ E.download.onclick=()=>{
 
 };
 
-
-
-E.share.onclick=async()=>{
+E.share.onclick=
+async()=>{
 
   if(!out)return;
 
@@ -2381,8 +2106,6 @@ E.share.onclick=async()=>{
     ||
     "Documento PDF";
 
-
-  // PEGA OS VALORES ATUAIS, JÁ EDITADOS
   const nomeField=
     fields.find(
       f=>f.label==="Nome / Razão Social"
@@ -2397,7 +2120,6 @@ E.share.onclick=async()=>{
     fields.find(
       f=>f.label==="CEP"
     );
-
 
   const nome=
     nomeField
@@ -2420,45 +2142,43 @@ E.share.onclick=async()=>{
     :
     "";
 
-
-  // TEXTO QUE VOCÊ PODE EDITAR MANUALMENTE NO PAINEL
   const textoPersonalizado=
     E.shareText.value.trim();
-
 
   const reference=
     E.shareReference.value.trim();
 
-
-  // MONTA AUTOMATICAMENTE A MENSAGEM
   const dadosAtualizados=[];
 
   if(nome){
+
     dadosAtualizados.push(
       `Nome: ${nome}`
     );
+
   }
 
   if(endereco){
+
     dadosAtualizados.push(
       `Endereço: ${endereco}`
     );
+
   }
 
   if(cep){
+
     dadosAtualizados.push(
       `CEP: ${cep}`
     );
-  }
 
+  }
 
   const blocoDados=
     dadosAtualizados.join("\n");
 
-
   const chamada=
     "Baixe o aplicativo para fazer você também, ou acesse nosso site.";
-
 
   const finalText=
     [
@@ -2469,7 +2189,6 @@ E.share.onclick=async()=>{
     ]
     .filter(Boolean)
     .join("\n\n");
-
 
   try{
 
@@ -2484,9 +2203,13 @@ E.share.onclick=async()=>{
     ){
 
       await navigator.share({
+
         title,
+
         text:finalText,
+
         files:[file]
+
       });
 
       status(
@@ -2498,12 +2221,14 @@ E.share.onclick=async()=>{
 
     }
 
-
     if(navigator.share){
 
       await navigator.share({
+
         title,
+
         text:finalText
+
       });
 
       status(
@@ -2514,7 +2239,6 @@ E.share.onclick=async()=>{
       return;
 
     }
-
 
     status(
       "Este navegador não possui compartilhamento direto. Use o botão Baixar PDF.",
@@ -2540,85 +2264,6 @@ E.share.onclick=async()=>{
     console.error(err);
 
     status(
-      "Não foi possível abrir o compartilhamento: "+
-      esc(
-        err.message||
-        String(err)
-      ),
-      "badmsg"
-    );
-
-  }
-
-};
-
-
-      status(
-        "Documento compartilhado.",
-        "okmsg"
-      );
-
-
-      return;
-
-    }
-
-
-    if(navigator.share){
-
-      await navigator.share({
-
-        title,
-
-        text:finalText
-
-      });
-
-
-      status(
-
-        "Seu navegador não permitiu compartilhar o PDF diretamente. A mensagem foi aberta para compartilhamento.",
-
-        "warnmsg"
-
-      );
-
-
-      return;
-
-    }
-
-
-    status(
-
-      "Este navegador não possui compartilhamento direto. Use o botão Baixar PDF.",
-
-      "warnmsg"
-
-    );
-
-  }
-  catch(err){
-
-    if(
-      err.name==="AbortError"
-    ){
-
-      status(
-        "Compartilhamento cancelado.",
-        "warnmsg"
-      );
-
-
-      return;
-
-    }
-
-
-    console.error(err);
-
-
-    status(
 
       "Não foi possível abrir o compartilhamento: "+
       esc(
@@ -2633,7 +2278,6 @@ E.share.onclick=async()=>{
   }
 
 };
-
 
 })();
 </script>
